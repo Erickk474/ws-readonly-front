@@ -7,17 +7,23 @@ function Page1() {
   const [connected, setConnected] = useState(false);
   const [count, setCount] = useState(0);
 
-  socket.on("joined", (data) => {
-    console.log("Joined", data);
-    setConnected(true);
-  });
+  useEffect(() => {
+    socket.on("joined", (data) => {
+      console.log("Joined", data);
+      setConnected(true);
+    });
 
-  socket.on("tick", (data) => {
-    setCount(data?.count);
-  });
+    socket.on("tick", (data) => {
+      console.log('tick', data);
+    });
+  }, []);
 
   const joinRoom = () => {
-    socket.emit("join-room", DOUBLE_ROOM_NAME);
+    socket.emit("join-in-room", DOUBLE_ROOM_NAME);
+  };
+
+  const leaveRoom = () => {
+    socket.emit("leave-out-room", DOUBLE_ROOM_NAME);
   };
 
   return (
@@ -29,6 +35,8 @@ function Page1() {
       <h3>Contagem: {count}</h3>
       <br />
       <button onClick={joinRoom}>Entrar na sala</button>
+      <br />
+      <button onClick={leaveRoom}>Sair da sala</button>
     </div>
   );
 }

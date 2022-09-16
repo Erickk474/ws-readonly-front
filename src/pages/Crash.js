@@ -17,7 +17,11 @@ function Page1() {
   });
 
   const joinRoom = () => {
-    socket.emit("join-room", CRASH_ROOM_NAME);
+    socket.emit("join-in-room", CRASH_ROOM_NAME);
+  };
+
+  const leaveRoom = () => {
+    socket.emit("leave-out-room", CRASH_ROOM_NAME);
   };
 
   return (
@@ -29,6 +33,8 @@ function Page1() {
       <h3>Contagem: {count}</h3>
       <br />
       <button onClick={joinRoom}>Entrar na sala</button>
+      <br />
+      <button onClick={leaveRoom}>Sair da sala</button>
     </div>
   );
 }
